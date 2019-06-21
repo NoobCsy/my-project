@@ -22,7 +22,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$router.push({ name: 'login'})
+        this.$router.push('/login')
         localStorage.removeItem('token')
         this.$message({
           type: 'success',

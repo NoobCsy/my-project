@@ -28,7 +28,7 @@ export default {
   mounted () {
     let token = localStorage.getItem('token')
     if (!token) {
-      this.$router.push({ name: 'login'})
+      this.$router.push({name: 'login'})
       this.$message.error('您还没有登录,请先登录!')
     }
   }

@@ -72,10 +72,10 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       tableData: [],
-      query: "",
+      query: '',
       pagenum: 1,
       pagesize: 2,
       total: 0,
@@ -87,58 +87,58 @@ export default {
         email: '',
         mobile: ''
       }
-    };
+    }
   },
   methods: {
-    getTableData() {
+    getTableData () {
       this.$http({
-        method: "GET",
+        method: 'GET',
         url: `http://localhost:8888/api/private/v1/users?query=${
           this.query
         }&pagenum=${this.pagenum}&pagesize=${this.pagesize}`,
-        headers: { Authorization: localStorage.getItem("token") }
+        headers: { Authorization: localStorage.getItem('token') }
       }).then(res => {
-        let { data, meta } = res.data;
+        let { data, meta } = res.data
         if (meta.status === 200) {
-          this.tableData = data.users;
-          this.total = data.total;
+          this.tableData = data.users
+          this.total = data.total
         }
-      });
+      })
     },
-    currChange(currentPage) {
-      this.pagenum = currentPage;
-      this.getTableData();
+    currChange (currentPage) {
+      this.pagenum = currentPage
+      this.getTableData()
     },
-    sizeChange(pagesize) {
-      this.pagesize = pagesize;
-      this.getTableData();
+    sizeChange (pagesize) {
+      this.pagesize = pagesize
+      this.getTableData()
     },
-    search() {
-      this.getTableData();
+    search () {
+      this.getTableData()
     },
-    openDialog() {
+    openDialog () {
       this.dialogFormVisible = true
     },
-    cancelDialog() {
+    cancelDialog () {
       this.dialogFormVisible = false
     },
-    addUseFn() {
+    addUseFn () {
       this.$http({
         method: 'POST',
         url: 'http://localhost:8888/api/private/v1/users',
         data: this.addUser,
-        headers: { Authorization: localStorage.getItem("token") }
-      }).then( res => {
+        headers: { Authorization: localStorage.getItem('token') }
+      }).then(res => {
         if (res.data.meta.status === 201) {
           this.$message({
             message: res.data.meta.msg,
-            type:'success'
+            type: 'success'
           })
           this.getTableData()
         } else {
           this.$message.error(res.data.meta.msg)
         }
-        //清空新增
+        // 清空新增
         for (const key in this.addUser) {
           this.addUser[key] = ''
         }
@@ -148,10 +148,10 @@ export default {
     }
 
   },
-  mounted() {
-    this.getTableData();
+  mounted () {
+    this.getTableData()
   }
-};
+}
 </script>
 
 <style>
