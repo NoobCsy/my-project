@@ -1,62 +1,71 @@
 <template>
+  <el-container>
+    <!-- 头部 -->
+    <el-header>
+      <Tophead></Tophead>
+    </el-header>
     <el-container>
-        <el-header>
-            <el-row>
-                <el-col :span="4">
-                    <img src="../../assets/imgs/logo.png" alt="">
-                </el-col>
-                <el-col :span="16">
-                    <h2>电商后台管理系统</h2>
-                </el-col>
-                <el-col :span="4">
-                    <a href="#">退出</a>
-                </el-col>
-            </el-row>
-        </el-header>
-        <el-container>
-            <el-aside width="200px">Aside</el-aside>
-            <el-main>Main</el-main>
-        </el-container>
+      <!-- 侧边栏 -->
+      <el-aside width="200px">
+        <Sidebar></Sidebar>
+      </el-aside>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
+  </el-container>
 </template>
 
 <script>
+import Tophead from '@/components/layout/tophead.vue'
+import Sidebar from '../../components/layout/sidebar.vue'
 export default {
-
+  // 注册组件
+  components: {
+    Tophead,
+    Sidebar
+  },
+  mounted () {
+    let token = localStorage.getItem('token')
+    if (!token) {
+      this.$router.push({ name: 'login'})
+      this.$message.error('您还没有登录,请先登录!')
+    }
+  }
 }
 </script>
 
 <style>
-    .el-header{
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-  }
+.el-header {
+  background-color: #b3c0d1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
 
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-  }
+.el-aside {
+  background-color: #d3dce6;
+  color: #333;
+  line-height: 200px;
+}
 
-  .el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
-  }
-  .el-container {
-      width: 100%;
-      height: 100%;
-  }
-  .el-header h2 {
-      margin: 0;
-  }
-  .el-header a {
-      text-decoration: none;
-      float: right;
-      color: green
-  }
+.el-main {
+  background-color: #e9eef3;
+  color: #333;
+}
+.el-container {
+  width: 100%;
+  height: 100%;
+}
+.el-header h2 {
+  margin: 0;
+}
+.el-header a {
+  text-decoration: none;
+  float: right;
+  color: green;
+}
+.el-aside .my-menu {
+    height: 100%;
+}
 </style>
