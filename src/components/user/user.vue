@@ -150,17 +150,17 @@ export default {
     }
   },
   methods: {
-    //获取全部数据
+    // 获取全部数据
     getTableData () {
       this.$http({
         method: 'GET',
         url: `users?query=${
           this.query
-        }&pagenum=${this.pagenum}&pagesize=${this.pagesize}`,
+        }&pagenum=${this.pagenum}&pagesize=${this.pagesize}`
       }).then(res => {
         let { data, meta } = res.data
         if (meta.status === 200) {
-          if (data.users.length === 0 && this.pagenum != 1) {
+          if (data.users.length === 0 && this.pagenum !== 1) {
             this.pagenum--
             this.getTableData()
             return
@@ -170,34 +170,34 @@ export default {
         }
       })
     },
-    //当前页改变
+    // 当前页改变
     currChange (currentPage) {
       this.pagenum = currentPage
       this.getTableData()
     },
-    //页码容量改变
+    // 页码容量改变
     sizeChange (pagesize) {
       this.pagesize = pagesize
       this.getTableData()
     },
-    //搜索
+    // 搜索
     search () {
       this.getTableData()
     },
-    //打开新增框
+    // 打开新增框
     openDialog () {
       this.dialogFormVisible = true
     },
-    //关闭新增框
+    // 关闭新增框
     cancelDialog () {
       this.dialogFormVisible = false
     },
-    //新增用户
+    // 新增用户
     addUserFn () {
       this.$http({
         method: 'POST',
         url: 'users',
-        data: this.addUser,
+        data: this.addUser
       }).then(res => {
         if (res.data.meta.status === 201) {
           this.$message({
@@ -216,7 +216,7 @@ export default {
       })
       this.dialogFormVisible = false
     },
-    //用户状态改变
+    // 用户状态改变
     switchChange (state, id) {
       this.$http({
         method: 'PUT',
@@ -229,7 +229,7 @@ export default {
         }
       })
     },
-    //删除用户
+    // 删除用户
     delUser (id) {
       this.$confirm('确定要删除该用户吗', '提示', {
         confirmButtonText: '确定',
@@ -238,7 +238,7 @@ export default {
       }).then(() => {
         this.$http({
           url: `users/${id}`,
-          method: 'DELETE',
+          method: 'DELETE'
 
         }).then(res => {
           if (res.data.meta.status === 200) {
@@ -258,27 +258,26 @@ export default {
         })
       })
     },
-    //打开修改框
+    // 打开修改框
     update (id) {
       this.$http({
         method: 'GET',
-        url: `users/${id}`,
-      }).then( res => {
-        let { data, meta} = res.data
+        url: `users/${id}`
+      }).then(res => {
+        let {data, meta} = res.data
         if (meta.status === 200) {
           this.updUser = data
           this.updDialog = true
         }
       })
-      
     },
-    //修改用户信息
-    updUserFn() {
+    // 修改用户信息
+    updUserFn () {
       this.$http({
         method: 'PUT',
         url: `users/${this.updUser.id}`,
-        data: { mobile: this.updUser.mobile, email: this.updUser.email},
-      }).then( res => {
+        data: {mobile: this.updUser.mobile, email: this.updUser.email}
+      }).then(res => {
         if (res.data.meta.status === 200) {
           this.getTableData()
           this.$message.success(res.data.meta.msg)
@@ -288,21 +287,21 @@ export default {
         this.updDialog = false
       })
     },
-    //打开角色分配面板
-    roles(id) {
+    // 打开角色分配面板
+    roles (id) {
       this.$http({
         url: `users/${id}`,
-        method: 'GET',
-      }).then( res => {
-        let { data, meta} = res.data
+        method: 'GET'
+      }).then(res => {
+        let {data, meta} = res.data
         if (meta.status === 200) {
           this.rolesObj = data
           this.roleDialog = true
           this.$http({
             method: 'GET',
-            url: 'roles',
+            url: 'roles'
 
-          }).then( res => {
+          }).then(res => {
             if (res.data.meta.status === 200) {
               this.selDataList = res.data.data
             }
@@ -312,13 +311,13 @@ export default {
         }
       })
     },
-    //分配角色
-    setRoleFn() {
+    // 分配角色
+    setRoleFn () {
       this.$http({
         method: 'PUT',
         url: `users/${this.rolesObj.id}/role`,
-        data: {rid : this.rolesObj.rid},
-      }).then( res => {
+        data: {rid: this.rolesObj.rid}
+      }).then(res => {
         if (res.data.meta.status === 200) {
           this.$message.success(res.data.meta.msg)
         } else {
