@@ -18,7 +18,7 @@
 
 <script>
 import Tophead from '@/components/layout/tophead.vue'
-import Sidebar from '../../components/layout/sidebar.vue'
+import Sidebar from '@/components/layout/sidebar.vue'
 export default {
   // 注册组件
   components: {
@@ -26,11 +26,11 @@ export default {
     Sidebar
   },
   mounted () {
-    let token = localStorage.getItem('token')
-    if (!token) {
-      this.$router.push({name: 'login'})
-      this.$message.error('您还没有登录,请先登录!')
-    }
+    // let token = localStorage.getItem('token')
+    // if (!token) {
+    //   this.$router.push({name: 'login'})
+    //   this.$message.error('您还没有登录,请先登录!')
+    // }
   }
 }
 </script>

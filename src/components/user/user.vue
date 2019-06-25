@@ -1,11 +1,7 @@
 <template>
   <el-card>
     <!-- 面包屑 -->
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <mybread one="用户管理" two="用户列表"></mybread>
     <!-- 搜索框 -->
     <el-row class="myrow">
       <el-col :span="6">
@@ -115,7 +111,11 @@
 </template>
 
 <script>
+import mybread from '@/components/layout/mybread.vue'
 export default {
+  components: {
+    mybread
+  },
   data () {
     return {
       tableData: [],

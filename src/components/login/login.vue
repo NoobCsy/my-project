@@ -46,9 +46,10 @@ export default {
           }).then(res => {
             let {data, meta} = res.data
             if (meta.status === 200) {
+              console.log(this)
               this.$message.success('登录成功')
-              this.$router.push('/home')
               localStorage.setItem('token', data.token)
+              this.$router.push('/home')
             } else {
               this.$message.error('登录失败')
             }
