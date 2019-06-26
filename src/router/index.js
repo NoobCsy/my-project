@@ -7,7 +7,9 @@ import User from '@/components/user/user.vue'
 import Rightlist from '@/components/rightlist/rightlist.vue'
 import Rolelist from '@/components/rolelist/rolelist.vue'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import Category from '@/components/category/category.vue'
+import Productlist from '@/components/productlist/productlist.vue'
+import Add from '../components/productadd/productadd.vue'
 Vue.use(Router)
 Vue.use(ElementUI)
 Vue.prototype.$message = Message
@@ -25,7 +27,10 @@ const router = new Router({
       children: [
         {path: '/user', component: User, name: 'user'},
         {path: '/rightlist', name: 'rightlist', component: Rightlist},
-        {path: '/rolelist', name: 'rolelist', component: Rolelist}
+        {path: '/rolelist', name: 'rolelist', component: Rolelist},
+        {path: '/category', name: 'category', component: Category},
+        {path: '/productlist', name: 'productlist', component: Productlist}, 
+        {path: '/productlist/add', name: 'add', component: Add} 
       ]
     },
     {

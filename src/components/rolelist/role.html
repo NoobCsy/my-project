@@ -23,7 +23,6 @@
     <el-table :data="tableData" style="width: 100%">
         <el-table-column type="expand">
             <template slot-scope="scope">
-                {{scope.row.id}}
               <el-row v-for="(item1, index1) in scope.row.children" :key="index1">
                   <el-col :span="4">
                     <el-tag  closable class="tag1" @close="del(scope.row,item1.id)">
@@ -47,6 +46,7 @@
                       </el-row>
                   </el-col>
               </el-row>  
+              <el-row v-if="!scope.row.children.length"> 没有分配权限</el-row>
             </template>
         </el-table-column>
         <el-table-column type="index">
@@ -61,18 +61,18 @@
                 <el-row>
                     <el-button type="primary" icon="el-icon-edit" plain size="mini" @click="editDialog(scope.row.id)"></el-button>
                     <el-button type="danger" icon="el-icon-delete" plain size="mini" @click=delRole(scope.row.id)></el-button>
-                    <el-button type="success" icon="el-icon-check" plain size="mini" @click="openDialog(scope.row.children)"></el-button>
+                    <el-button type="success" icon="el-icon-check" plain size="mini" @click="openDialog(scope.row)"></el-button>
                 </el-row>
             </template>
         </el-table-column>
     </el-table>
     <!-- 分配角色权限面板 -->
     <el-dialog title="分配角色" :visible.sync="roleDialog">
-        <el-tree :data="rightlist" show-checkbox default-expand-all node-key="id" :props="defaultProps" :default-checked-keys="defaultChecked">
+        <el-tree :data="rightlist" show-checkbox default-expand-all node-key="id" :props="defaultProps" :default-checked-keys="defaultChecked" ref="tree" >
         </el-tree>
         <div slot="footer" class="dialog-footer">
-            <el-button>取 消</el-button>
-            <el-button type="primary">确 定</el-button>
+            <el-button @click="roleDialog=false">取 消</el-button>
+            <el-button type="primary" @click="roleAssign">确 定</el-button>
         </div>
     </el-dialog>
     <!-- 编辑角色面板 -->

@@ -21,7 +21,8 @@ export default {
         roleName: '',
         roleDesc: '',
         roleId: ''
-      }
+      },
+      assignId: ''
     }
   },
   components: {
@@ -60,6 +61,8 @@ export default {
     },
     // 打开角色权限分配对话框
     openDialog (rightData) {
+      this.defaultChecked = []
+      this.assignId = rightData.id
       this.$http({
         method: 'GET',
         url: 'rights/tree'
@@ -68,13 +71,13 @@ export default {
         if (meta.status === 200) {
           this.rightlist = data
           this.roleDialog = true
-          rightData.forEach(ele => {
+          rightData.children.forEach(ele => {
             ele.children.forEach(ele => {
               ele.children.forEach(ele => {
                 this.defaultChecked.push(ele.id)
               })
             })
-          })
+          })  
         } else {
           this.$message.error(meta.msg)
         }
@@ -145,6 +148,33 @@ export default {
           this.$message.error(meta.msg)
         }
         this.editDialogVisible = false
+        this.loadData()
+      })
+    },
+    //更改权限
+    roleAssign() {
+      let nodes = []
+      let tree = this.$refs.tree
+      let checkedNodes = tree.getCheckedNodes()
+      let halfCheckedNodes = tree.getHalfCheckedNodes()
+      checkedNodes.forEach( ele => {
+        nodes.push(ele.id.toString())
+      })
+      halfCheckedNodes.forEach( ele => {
+        nodes.push(ele.id.toString())
+      })
+      nodes = nodes.join(',')
+      this.$http({
+        method: 'POST',
+        url: `roles/${this.assignId}/rights`,
+        data: {rids: nodes}
+      }).then( res => {
+        if (res.data.meta.status === 200) {
+          this.$message.success(res.data.meta.msg)
+        } else {
+          this.$message.error(res.data.meta.msg)
+        }
+        this.roleDialog = false
         this.loadData()
       })
     }
